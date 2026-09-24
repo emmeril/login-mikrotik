@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="id">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Emmeril Hotspot - Login</title>
+
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+        <!-- Google Fonts -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet">
+
+        <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        :root {
+            --primary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --bg-gradient: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG { 
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; } 
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo-container {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Purchase Box Styles */
+        .purchase-box {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #93c5fd;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .store-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .store-item:hover {
+            background: #f1f5f9;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Login Button */
+        .btn-login {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 18px rgba(79, 172, 254, 0.3);
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(79, 172, 254, 0.4);
+        }
+        
+        /* Error Modal Styles */
+        .error-modal .modal-content {
+            border-radius: 18px;
+            border: none;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(255, 71, 87, 0.2);
+            animation: modalAppear 0.4s ease-out;
+        }
+        
+        .error-modal .modal-header {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            border-bottom: none;
+        }
+        
+        .error-icon {
+            animation: pulse 2s infinite;
+        }
+        
+        .error-action-btn {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+        }
+        
+        .error-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+        }
+        
+        @keyframes modalAppear {
+            0% { 
+                opacity: 0; 
+                transform: translateY(-20px) scale(0.95); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* URL Box with Copy Button (GitHub Style) */
+        .url-box {
+            position: relative;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px 40px 10px 12px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            word-break: break-all;
+            font-size: 11px;
+            color: #334155;
+            text-align: left;
+            line-height: 1.3;
+            overflow: hidden;
+            user-select: all;
+            -webkit-user-select: all;
+            -moz-user-select: all;
+            -ms-user-select: all;
+        }
+        
+        .copy-btn-github {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #64748b;
+            z-index: 10;
+        }
+        
+        .copy-btn-github:hover {
+            background: #e2e8f0;
+            border-color: #cbd5e1;
+            color: #334155;
+        }
+        
+        .copy-btn-github:active {
+            transform: scale(0.95);
+        }
+        
+        .copy-btn-github.copied {
+            background: #10b981;
+            border-color: #10b981;
+            color: white;
+            animation: pulseCopy 0.5s ease;
+        }
+        
+        @keyframes pulseCopy {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Simple Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            z-index: 1000;
+            animation: slideInRight 0.3s ease, slideOutRight 0.3s ease 2s;
+            animation-fill-mode: forwards;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 280px;
+            font-size: 14px;
+        }
+        
+        .notification.error {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        
+        /* Fallback untuk browser yang tidak support clipboard API */
+        .copy-fallback {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+    </head>
+
+    <body
+        class="flex flex-col items-center justify-center p-3 sm:p-4 min-h-screen">
+
+        $(if chap-id)
+        <form name="sendin" action="$(link-login-only)" method="post"
+            style="display:none">
+            <input type="hidden" name="username" />
+            <input type="hidden" name="password" />
+            <input type="hidden" name="dst" value="$(link-orig)" />
+            <input type="hidden" name="popup" value="true" />
+        </form>
+        <script src="/md5.js"></script>
+        <script>
+        function doLogin() {
+            document.sendin.username.value = document.login.username.value;
+            document.sendin.password.value = hexMD5('$(chap-id)' + document.login.password.value + '$(chap-challenge)');
+            document.sendin.submit();
+            return false;
+        }
+    </script>
+        $(endif)
+
+        <div class="w-full max-w-md">
+            <div class="glass-card rounded-2xl p-4 sm:p-6 shadow-lg">
+                <div class="text-center mb-5 sm:mb-6">
+                    <div
+                        class="logo-container w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto flex items-center justify-center mb-3">
+                        <img src="assets/img/logo.png" alt="Logo"
+                            class="w-12 h-12 sm:w-16 sm:h-16 rounded-full">
+                    </div>
+                    <h5 class="font-bold text-lg sm:text-xl mb-0">Emmeril
+                        Hotspot</h5>
+                    <small class="text-gray-500 text-xs sm:text-sm">Internet
+                        Cepat & Stabil</small>
+                </div>
+
+                <!-- Purchase Info Box - 2 Kolom Tetap di Desktop dan Mobile -->
+                <div class="purchase-box rounded-xl p-3 sm:p-4 mb-5 sm:mb-6">
+                    <div class="flex">
+                        <!-- Kolom Kiri: Voucher Fisik - 50% width -->
+                        <div class="w-1/2 pr-1.5 sm:pr-2">
+                            <div
+                                class="flex items-center justify-center gap-1 sm:gap-2 mb-2 sm:mb-3">
+                                <div
+                                    class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-blue-400 to-cyan-400 flex items-center justify-center flex-shrink-0">
+                                    <i
+                                        class="fas fa-store text-white text-[11px] sm:text-xs"></i>
+                                </div>
+                                <h6
+                                    class="font-bold text-gray-800 text-[11px] sm:text-xs whitespace-nowrap flex-shrink-0">Voucher
+                                    Fisik</h6>
+                            </div>
+
+                            <div class="space-y-1.5 sm:space-y-2">
+                                <div
+                                    class="store-item rounded-lg px-2.5 py-2 sm:px-3 sm:py-2">
+
+                                    <span
+                                        class="text-gray-700 text-[11px] sm:text-xs font-medium ">
+                                        <i class="fas fa-store text-yellow-500 text-[11px] sm:text-xs flex-shrink-0"></i>
+                                            Warung Bi Saniti <br>
+                                        <i class="fas fa-store text-yellow-500 text-[11px] sm:text-xs flex-shrink-0"></i>
+                                            Warung Bi Uni <br>
+                                        <i class="fas fa-store text-yellow-500 text-[11px] sm:text-xs flex-shrink-0"></i> Warung
+                                            Mba Ela <br>
+                                        <i class="fas fa-store text-yellow-500 text-[11px] sm:text-xs flex-shrink-0"></i> Warung
+                                            Mba Tuti
+                                    </span>
+
+                                    </div>
+                                  
+                                   
+                               
+                                </div>
+                            </div>
+
+                            <!-- Divider Vertikal -->
+                            <div
+                                class="w-px bg-gradient-to-b from-transparent via-blue-300 to-transparent mx-1 sm:mx-2 self-center h-20 sm:h-22"></div>
+
+                            <!-- Kolom Kanan: Voucher Online - 50% width -->
+                            <div class="w-1/2 pl-1.5 sm:pl-2">
+                                <div
+                                    class="flex items-center justify-center gap-1 sm:gap-2 mb-2 sm:mb-3">
+                                    <div
+                                        class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-blue-400 to-cyan-400 flex items-center justify-center flex-shrink-0">
+                                        <i
+                                            class="fas fa-globe text-white text-[11px] sm:text-xs"></i>
+                                    </div>
+                                    <h6
+                                        class="font-bold text-gray-800 text-[11px] sm:text-xs whitespace-nowrap flex-shrink-0">Voucher
+                                        Online</h6>
+                                </div>
+
+                                <div class="flex flex-col h-full">
+                                    <!-- URL Box with Copy Button -->
+                                    <div class="relative">
+                                        <div class="url-box" id="urlText">
+                                            https://voucher.emmeril-hotspot.online
+                                        </div>
+                                        <!-- Copy Button (positioned at top-right) -->
+                                        <button class="copy-btn-github"
+                                            id="copyUrlBtn" title="Copy URL"
+                                            type="button">
+                                            <i class="fas fa-copy text-xs"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form name="login" action="$(link-login-only)" method="post"
+                        $(if chap-id) onSubmit="return doLogin()" $(endif)>
+                        <input type="hidden" name="dst" value="$(link-orig)" />
+                        <input type="hidden" name="popup" value="true" />
+
+                        <div class="mb-3 sm:mb-4">
+                            <div class="relative">
+                                <input name="username" type="text"
+                                    id="username-user"
+                                    class="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-white/90 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                                    placeholder="Username" value="$(username)"
+                                    required autocomplete="off">
+                                <div
+                                    class="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2">
+                                    <i
+                                        class="fas fa-user text-gray-400 text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 sm:mb-6">
+                            <div class="relative">
+                                <input name="password" type="password"
+                                    id="passwordInput"
+                                    class="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-white/90 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                                    placeholder="Password" required
+                                    autocomplete="off">
+                                <div
+                                    class="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2">
+                                    <i
+                                        class="fas fa-lock text-gray-400 text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button type="submit"
+                                class="btn-login w-full py-2.5 sm:py-3 rounded-xl font-semibold shadow-md text-sm">
+                                <i
+                                    class="fas fa-right-to-bracket mr-1.5 sm:mr-2"></i>HUBUNGKAN
+                            </button>
+                        </div>
+                    </form>
+
+                    <div
+                        class="mt-5 sm:mt-6 pt-3 sm:pt-4 border-t border-gray-200 text-center flex justify-between">
+                        $(if trial == 'yes')
+                        <a
+                            href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)"
+                            class="text-green-600 text-xs font-semibold hover:text-green-700 whitespace-nowrap">
+                            <i class="far fa-clock mr-1"></i>Coba Gratis
+                        </a>
+                        $(endif)
+                        <a href="https://wa.me/6287728972090"
+                            class="text-gray-600 text-xs font-medium hover:text-gray-800 whitespace-nowrap">
+                            <i class="fab fa-whatsapp mr-1"></i>Bantuan CS
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="text-center mt-4 sm:mt-6 text-white/75 text-xs">
+                &copy; 2024 Emmeril Hotspot Network
+            </footer>
+
+            <!-- Error Modal -->
+            <div
+                class="fixed inset-0 flex items-center justify-center z-50 hidden"
+                id="errorModal">
+                <div
+                    class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+                <div
+                    class="relative bg-white rounded-2xl w-full max-w-sm mx-4 overflow-hidden shadow-2xl">
+                    <div class="error-modal">
+                        <div class="modal-header p-4 sm:p-6">
+                            <div class="flex justify-between items-center">
+                                <h5
+                                    class="modal-title font-bold text-base sm:text-lg">
+                                    <i
+                                        class="fas fa-exclamation-triangle mr-2"></i>Gagal
+                                    Masuk
+                                </h5>
+                                <button type="button"
+                                    class="text-white/80 hover:text-white text-xl"
+                                    onclick="closeModal()">
+                                    &times;
+                                </button>
+                            </div>
+                        </div>
+                        <div class="modal-body p-4 sm:p-6">
+                            <div
+                                class="error-icon text-red-500 text-4xl sm:text-5xl text-center mb-3 sm:mb-4">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <h6
+                                class="font-bold text-gray-800 text-center mb-1 sm:mb-2 text-sm sm:text-base"
+                                id="errorModalSubtitle"></h6>
+                            <p
+                                class="error-message text-gray-600 text-center text-xs sm:text-sm mb-4 sm:mb-6"
+                                id="errorModalMessage">
+                                Terjadi kesalahan saat login ke jaringan.
+                            </p>
+                            <div class="text-center">
+                                <button type="button"
+                                    class="error-action-btn rounded-lg px-4 sm:px-6 py-1.5 sm:py-2 font-semibold text-xs sm:text-sm"
+                                    onclick="closeModal()">
+                                    <i class="fas fa-redo mr-1 sm:mr-2"></i>Coba
+                                    Lagi
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fallback input untuk copy -->
+            <input type="text" id="copyFallback" class="copy-fallback"
+                value="https://voucher.emmeril-hotspot.online">
+
+            <script>
+        // Modal Functions
+        function showModal() {
+            document.getElementById('errorModal').classList.remove('hidden');
+        }
+        
+        function closeModal() {
+            document.getElementById('errorModal').classList.add('hidden');
+        }
+        
+        // Show notification
+        function showNotification(message, isError = false) {
+            // Remove existing notification
+            const existingNotif = document.querySelector('.notification');
+            if (existingNotif) {
+                existingNotif.remove();
+            }
+            
+            // Create new notification
+            const notif = document.createElement('div');
+            notif.className = `notification ${isError ? 'error' : ''}`;
+            notif.innerHTML = `
+                <i class="fas ${isError ? 'fa-times-circle' : 'fa-check-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notif);
+            
+            // Remove notification after animation
+            setTimeout(() => {
+                if (notif.parentNode) {
+                    notif.remove();
+                }
+            }, 2300);
+        }
+        
+        // Copy URL Function with fallback for all browsers
+        function copyUrlToClipboard() {
+            const url = 'https://voucher.emmeril-hotspot.online';
+            const copyBtn = document.getElementById('copyUrlBtn');
+            const icon = copyBtn.querySelector('i');
+            
+            // Method 1: Modern Clipboard API (async)
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(url)
+                    .then(() => {
+                        copySuccess(copyBtn, icon);
+                    })
+                    .catch(err => {
+                        console.log('Async clipboard failed, trying fallback:', err);
+                        useFallbackCopy(url, copyBtn, icon);
+                    });
+            } 
+            // Method 2: Fallback for older browsers and insecure contexts
+            else {
+                useFallbackCopy(url, copyBtn, icon);
+            }
+        }
+        
+        // Fallback copy method using execCommand
+        function useFallbackCopy(url, copyBtn, icon) {
+            try {
+                // Create temporary textarea element
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                textArea.style.position = 'fixed';
+                textArea.style.top = '0';
+                textArea.style.left = '0';
+                textArea.style.width = '2em';
+                textArea.style.height = '2em';
+                textArea.style.padding = '0';
+                textArea.style.border = 'none';
+                textArea.style.outline = 'none';
+                textArea.style.boxShadow = 'none';
+                textArea.style.background = 'transparent';
+                
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                // Execute copy command
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                if (successful) {
+                    copySuccess(copyBtn, icon);
+                } else {
+                    copyFailed();
+                }
+            } catch (err) {
+                console.log('Fallback copy failed:', err);
+                // Method 3: Last resort - select the text and prompt user
+                selectTextAndPrompt(url, copyBtn, icon);
+            }
+        }
+        
+        // Last resort method - select text and prompt user to copy manually
+        function selectTextAndPrompt(url, copyBtn, icon) {
+            try {
+                // Select the URL text in the url-box
+                const urlText = document.getElementById('urlText');
+                const selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(urlText);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                
+                // Try to copy one more time
+                const successful = document.execCommand('copy');
+                
+                if (successful) {
+                    copySuccess(copyBtn, icon);
+                } else {
+                    // Show instructions for manual copy
+                    showNotification('Pilih teks dan tekan Ctrl+C untuk copy', true);
+                    setTimeout(() => {
+                        resetCopyButton(copyBtn, icon);
+                    }, 2000);
+                }
+                
+                // Deselect text after a moment
+                setTimeout(() => {
+                    selection.removeAllRanges();
+                }, 1000);
+            } catch (err) {
+                console.log('Text selection failed:', err);
+                showNotification('Gagal menyalin. URL: ' + url, true);
+                setTimeout(() => {
+                    resetCopyButton(copyBtn, icon);
+                }, 2000);
+            }
+        }
+        
+        // Copy success handler
+        function copySuccess(copyBtn, icon) {
+            copyBtn.classList.add('copied');
+            icon.className = 'fas fa-check text-xs';
+            showNotification('URL berhasil disalin!');
+            
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                resetCopyButton(copyBtn, icon);
+            }, 2000);
+        }
+        
+        // Copy failed handler
+        function copyFailed() {
+            showNotification('Gagal menyalin URL. Coba manual copy.', true);
+        }
+        
+        // Reset copy button to original state
+        function resetCopyButton(copyBtn, icon) {
+            copyBtn.classList.remove('copied');
+            icon.className = 'fas fa-copy text-xs';
+        }
+        
+        // Event listeners
+        document.addEventListener("DOMContentLoaded", function () {
+            // Auto Focus pada input username
+            const usernameInput = document.getElementById("username-user");
+            if (usernameInput) {
+                usernameInput.focus();
+            }
+
+            // MikroTik Error Handling dengan Modal
+            var error = "$(error)";
+            if (error && error !== "") {
+                var title = "Gagal Masuk";
+                var subtitle = "";
+                var msg = error;
+                
+                // Terjemahkan pesan error
+                if(error.includes("username") || error.includes("password") || error.includes("invalid")) {
+                    subtitle = "Kredensial Salah";
+                    msg = "Username atau Password yang Anda masukkan tidak valid. Silakan periksa kembali.";
+                } else if(error.includes("full") || error.includes("limit")) {
+                    subtitle = "Batas Pengguna Penuh";
+                    msg = "Batas pengguna voucher sudah penuh. Silakan coba lagi nanti atau hubungi Customer Service.";
+                } else if(error.includes("expired")) {
+                    subtitle = "Voucher Kadaluarsa";
+                    msg = "Voucher Anda telah kadaluarsa. Silakan beli voucher baru untuk melanjutkan.";
+                } else if(error.includes("mac")) {
+                    subtitle = "Perangkat Terdaftar";
+                    msg = "Perangkat Anda sudah terdaftar dengan akun lain. Silakan gunakan perangkat lain atau hubungi CS.";
+                } else if(error.includes("already")) {
+                    subtitle = "Sudah Terhubung";
+                    msg = "Anda sudah terhubung ke jaringan. Tidak perlu login kembali.";
+                } else {
+                    subtitle = "Kesalahan Sistem";
+                    msg = "Terjadi kesalahan pada sistem. Silakan coba beberapa saat lagi.";
+                }
+                
+                // Update modal content
+                document.getElementById('errorModalSubtitle').innerText = subtitle;
+                document.getElementById('errorModalMessage').innerText = msg;
+                
+                // Tampilkan modal
+                showModal();
+                
+                // Auto focus ke username input setelah modal ditutup
+                document.getElementById('errorModal').addEventListener('click', function (e) {
+                    if (e.target === this) {
+                        if (usernameInput) {
+                            usernameInput.focus();
+                            usernameInput.select();
+                        }
+                    }
+                });
+            }
+            
+            // Attach copy button event
+            const copyBtn = document.getElementById('copyUrlBtn');
+            if (copyBtn) {
+                // Remove any existing event listeners first
+                copyBtn.replaceWith(copyBtn.cloneNode(true));
+                const newCopyBtn = document.getElementById('copyUrlBtn');
+                
+                newCopyBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    copyUrlToClipboard();
+                });
+                
+                // Also allow clicking on the URL box to select text
+                const urlBox = document.getElementById('urlText');
+                urlBox.addEventListener('click', function(e) {
+                    // Don't interfere with copy button clicks
+                    if (e.target.closest('.copy-btn-github')) {
+                        return;
+                    }
+                    
+                    // Select all text in the URL box
+                    const range = document.createRange();
+                    range.selectNodeContents(this);
+                    const selection = window.getSelection();
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                });
+            }
+        });
+        
+        // Close modal when clicking outside
+        document.getElementById('errorModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+                const errorModal = document.getElementById('errorModal');
+                if (!errorModal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            }
+        });
+    </script>
+        </body>
+    </html>
