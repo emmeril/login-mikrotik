@@ -56,13 +56,6 @@
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
 
-        /* Purchase Box Styles */
-        .purchase-box {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #93c5fd;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
         .store-item {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
@@ -70,8 +63,8 @@
             align-items: center;
             gap: 8px;
             transition: all 0.2s ease;
-            overflow: hidden;
-            white-space: nowrap;
+            min-width: 0;
+            white-space: normal;
         }
         
         .store-item:hover {
@@ -100,21 +93,16 @@
             border: none;
             overflow: hidden;
             box-shadow: 0 15px 40px rgba(255, 71, 87, 0.2);
-            animation: modalAppear 0.4s ease-out;
         }
         
         .error-modal .modal-header {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
             color: white;
             border-bottom: none;
         }
         
-        .error-icon {
-            animation: pulse 2s infinite;
-        }
-        
         .error-action-btn {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
             color: white;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
@@ -125,30 +113,14 @@
             box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
         }
         
-        @keyframes modalAppear {
-            0% { 
-                opacity: 0; 
-                transform: translateY(-20px) scale(0.95); 
-            }
-            100% { 
-                opacity: 1; 
-                transform: translateY(0) scale(1); 
-            }
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
         /* URL Box with Copy Button (GitHub Style) */
         .url-box {
             position: relative;
             background: #f8fafc;
             border: 1px solid #e2e8f0;
             border-radius: 8px;
-            padding: 10px 40px 10px 12px;
+            min-height: 56px;
+            padding: 10px 58px 10px 12px;
             font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
             word-break: break-all;
             font-size: 11px;
@@ -156,6 +128,8 @@
             text-align: left;
             line-height: 1.3;
             overflow: hidden;
+            display: flex;
+            align-items: center;
             user-select: all;
             -webkit-user-select: all;
             -moz-user-select: all;
@@ -164,18 +138,19 @@
         
         .copy-btn-github {
             position: absolute;
-            top: 6px;
+            top: 50%;
             right: 6px;
             background: #f1f5f9;
             border: 1px solid #e2e8f0;
             border-radius: 5px;
-            width: 24px;
-            height: 24px;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
+            transform: translateY(-50%);
             color: #64748b;
             z-index: 10;
         }
@@ -187,20 +162,18 @@
         }
         
         .copy-btn-github:active {
-            transform: scale(0.95);
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .copy-btn-github:focus-visible {
+            outline: 3px solid #2563eb;
+            outline-offset: 2px;
         }
         
         .copy-btn-github.copied {
             background: #10b981;
             border-color: #10b981;
             color: white;
-            animation: pulseCopy 0.5s ease;
-        }
-        
-        @keyframes pulseCopy {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
         }
         
         /* Simple Notification */
@@ -263,7 +236,7 @@
     </head>
 
     <body
-        class="flex flex-col items-center justify-center p-3 sm:p-4 min-h-screen">
+        class="flex min-h-screen flex-col items-center justify-start px-4 py-4 sm:justify-center sm:p-6">
 
         $(if chap-id)
         <form name="sendin" action="$(link-login-only)" method="post"
@@ -285,7 +258,7 @@
         $(endif)
 
         <div class="w-full max-w-md">
-            <div class="glass-card rounded-2xl p-4 sm:p-6 shadow-lg">
+            <div class="glass-card rounded-2xl p-5 shadow-lg sm:p-6">
                 <div class="text-center mb-5 sm:mb-6">
                     <div
                         class="logo-container w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto flex items-center justify-center mb-3">
@@ -298,93 +271,24 @@
                         Cepat & Stabil</small>
                 </div>
 
-                <!-- Purchase Info Box - 2 Kolom Tetap di Desktop dan Mobile -->
-                <div class="purchase-box rounded-xl p-3 sm:p-4 mb-5 sm:mb-6">
-                    <div class="flex">
-                        <!-- Kolom Kiri: Voucher Fisik - 50% width -->
-                        <div class="w-1/2 pr-1.5 sm:pr-2">
-                            <div
-                                class="flex items-center justify-center gap-1 sm:gap-2 mb-2 sm:mb-3">
-                                <div
-                                    class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-blue-400 to-cyan-400 flex items-center justify-center flex-shrink-0">
-                                    <i
-                                        class="fas fa-store text-white text-[11px] sm:text-xs"></i>
-                                </div>
-                                <h6
-                                    class="font-bold text-gray-800 text-[11px] sm:text-xs whitespace-nowrap flex-shrink-0">Voucher
-                                    Fisik</h6>
-                            </div>
+                <div class="mb-4">
+                    <h1 class="text-lg font-bold text-gray-900">Masuk ke jaringan</h1>
+                    <p class="mt-1 text-xs leading-5 text-gray-600">Masukkan nama pengguna dan kata sandi untuk terhubung.</p>
+                </div>
 
-                            <div class="space-y-1.5 sm:space-y-2">
-                                <div
-                                    class="store-item rounded-lg px-2.5 py-2 sm:px-3 sm:py-2">
-
-                                    <span
-                                        class="text-gray-700 text-[11px] sm:text-xs font-medium ">
-                                        <i class="fas fa-store text-yellow-500 text-[11px] sm:text-xs flex-shrink-0"></i>
-                                            Warung Bi Saniti <br>
-                                        <i class="fas fa-store text-yellow-500 text-[11px] sm:text-xs flex-shrink-0"></i>
-                                            Warung Bi Uni <br>
-                                        <i class="fas fa-store text-yellow-500 text-[11px] sm:text-xs flex-shrink-0"></i> Warung
-                                            Mba Ela <br>
-                                        <i class="fas fa-store text-yellow-500 text-[11px] sm:text-xs flex-shrink-0"></i> Warung
-                                            Mba Tuti
-                                    </span>
-
-                                    </div>
-                                  
-                                   
-                               
-                                </div>
-                            </div>
-
-                            <!-- Divider Vertikal -->
-                            <div
-                                class="w-px bg-gradient-to-b from-transparent via-blue-300 to-transparent mx-1 sm:mx-2 self-center h-20 sm:h-22"></div>
-
-                            <!-- Kolom Kanan: Voucher Online - 50% width -->
-                            <div class="w-1/2 pl-1.5 sm:pl-2">
-                                <div
-                                    class="flex items-center justify-center gap-1 sm:gap-2 mb-2 sm:mb-3">
-                                    <div
-                                        class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-blue-400 to-cyan-400 flex items-center justify-center flex-shrink-0">
-                                        <i
-                                            class="fas fa-globe text-white text-[11px] sm:text-xs"></i>
-                                    </div>
-                                    <h6
-                                        class="font-bold text-gray-800 text-[11px] sm:text-xs whitespace-nowrap flex-shrink-0">Voucher
-                                        Online</h6>
-                                </div>
-
-                                <div class="flex flex-col h-full">
-                                    <!-- URL Box with Copy Button -->
-                                    <div class="relative">
-                                        <div class="url-box" id="urlText">
-                                            https://voucher.emmeril-hotspot.online
-                                        </div>
-                                        <!-- Copy Button (positioned at top-right) -->
-                                        <button class="copy-btn-github"
-                                            id="copyUrlBtn" title="Copy URL"
-                                            type="button">
-                                            <i class="fas fa-copy text-xs"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <form name="login" action="$(link-login-only)" method="post"
+                <form name="login" action="$(link-login-only)" method="post"
                         $(if chap-id) onSubmit="return doLogin()" $(endif)>
                         <input type="hidden" name="dst" value="$(link-orig)" />
                         <input type="hidden" name="popup" value="true" />
 
-                        <div class="mb-3 sm:mb-4">
+                        <div class="mb-4">
+                            <label for="username-user"
+                                class="mb-1.5 block text-xs font-semibold text-gray-700">Nama pengguna</label>
                             <div class="relative">
                                 <input name="username" type="text"
                                     id="username-user"
-                                    class="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-white/90 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                                    placeholder="Username" value="$(username)"
+                                    class="w-full rounded-xl border border-gray-300 bg-white/90 py-3 pl-10 pr-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 sm:pl-12 sm:pr-4"
+                                    placeholder="Masukkan nama pengguna" value="$(username)"
                                     required autocomplete="off">
                                 <div
                                     class="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2">
@@ -394,12 +298,14 @@
                             </div>
                         </div>
 
-                        <div class="mb-4 sm:mb-6">
+                        <div class="mb-5">
+                            <label for="passwordInput"
+                                class="mb-1.5 block text-xs font-semibold text-gray-700">Kata sandi</label>
                             <div class="relative">
                                 <input name="password" type="password"
                                     id="passwordInput"
-                                    class="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 bg-white/90 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                                    placeholder="Password" required
+                                    class="w-full rounded-xl border border-gray-300 bg-white/90 py-3 pl-10 pr-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 sm:pl-12 sm:pr-4"
+                                    placeholder="Masukkan kata sandi" required
                                     autocomplete="off">
                                 <div
                                     class="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2">
@@ -409,30 +315,37 @@
                             </div>
                         </div>
 
-                        <div>
+                        <div class="flex gap-2">
                             <button type="submit"
-                                class="btn-login w-full py-2.5 sm:py-3 rounded-xl font-semibold shadow-md text-sm">
+                                class="btn-login inline-flex min-h-11 flex-1 items-center justify-center rounded-xl px-2 py-3 text-xs font-semibold shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:px-3 sm:text-sm">
                                 <i
-                                    class="fas fa-right-to-bracket mr-1.5 sm:mr-2"></i>HUBUNGKAN
+                                    class="fas fa-right-to-bracket mr-1.5 sm:mr-2"></i>Hubungkan
+                            </button>
+                            <button type="button" id="openPurchaseModal"
+                                class="inline-flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-xl border border-blue-300 bg-white/80 px-2 py-3 text-xs font-semibold text-blue-700 shadow-sm transition-colors hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:gap-2 sm:px-3 sm:text-sm"
+                                onclick="showPurchaseModal()">
+                                <i class="fas fa-store" aria-hidden="true"></i>
+                                Beli voucher
                             </button>
                         </div>
-                    </form>
+                </form>
 
-                    <div
-                        class="mt-5 sm:mt-6 pt-3 sm:pt-4 border-t border-gray-200 text-center flex justify-between">
+                <div
+                        class="mt-5 flex flex-nowrap items-center justify-center gap-2 border-t border-gray-200 pt-3 text-center sm:mt-6 sm:pt-4">
                         $(if trial == 'yes')
                         <a
                             href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)"
-                            class="text-green-600 text-xs font-semibold hover:text-green-700 whitespace-nowrap">
+                            class="inline-flex min-h-11 flex-1 items-center justify-center whitespace-nowrap px-1 text-[11px] font-semibold text-green-600 hover:text-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:px-2 sm:text-xs">
                             <i class="far fa-clock mr-1"></i>Coba Gratis
                         </a>
                         $(endif)
                         <a href="https://wa.me/6287728972090"
-                            class="text-gray-600 text-xs font-medium hover:text-gray-800 whitespace-nowrap">
+                            class="inline-flex min-h-11 flex-1 items-center justify-center whitespace-nowrap px-1 text-[11px] font-medium text-gray-600 hover:text-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 sm:px-2 sm:text-xs">
                             <i class="fab fa-whatsapp mr-1"></i>Bantuan CS
                         </a>
-                    </div>
                 </div>
+            </div>
+
             </div>
 
             <footer class="text-center mt-4 sm:mt-6 text-white/75 text-xs">
@@ -442,24 +355,30 @@
             <!-- Error Modal -->
             <div
                 class="fixed inset-0 flex items-center justify-center z-50 hidden"
-                id="errorModal">
+                id="errorModal" role="dialog" aria-modal="true"
+                aria-labelledby="errorModalTitle" aria-describedby="errorModalMessage">
                 <div
-                    class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+                    class="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                    id="errorModalBackdrop"></div>
                 <div
                     class="relative bg-white rounded-2xl w-full max-w-sm mx-4 overflow-hidden shadow-2xl">
                     <div class="error-modal">
                         <div class="modal-header p-4 sm:p-6">
                             <div class="flex justify-between items-center">
                                 <h5
-                                    class="modal-title font-bold text-base sm:text-lg">
+                                    class="modal-title font-bold text-base sm:text-lg"
+                                    id="errorModalTitle">
                                     <i
                                         class="fas fa-exclamation-triangle mr-2"></i>Gagal
                                     Masuk
                                 </h5>
                                 <button type="button"
-                                    class="text-white/80 hover:text-white text-xl"
+                                    class="inline-flex h-11 w-11 items-center justify-center border-0 bg-transparent p-0 text-xl text-white shadow-none outline-none ring-0 transition-transform hover:scale-110 hover:text-white focus:outline-none focus:ring-0 focus-visible:scale-110 focus-visible:text-red-200"
+                                    id="errorModalClose"
+                                    style="border: 0; outline: 0; box-shadow: none;"
+                                    aria-label="Tutup pesan kesalahan"
                                     onclick="closeModal()">
-                                    &times;
+                                    <i class="fas fa-xmark" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </div>
@@ -470,15 +389,13 @@
                             </div>
                             <h6
                                 class="font-bold text-gray-800 text-center mb-1 sm:mb-2 text-sm sm:text-base"
-                                id="errorModalSubtitle"></h6>
+                                id="errorModalSubtitle">Login tidak berhasil</h6>
                             <p
                                 class="error-message text-gray-600 text-center text-xs sm:text-sm mb-4 sm:mb-6"
-                                id="errorModalMessage">
-                                Terjadi kesalahan saat login ke jaringan.
-                            </p>
+                                id="errorModalMessage">$(error)</p>
                             <div class="text-center">
                                 <button type="button"
-                                    class="error-action-btn rounded-lg px-4 sm:px-6 py-1.5 sm:py-2 font-semibold text-xs sm:text-sm"
+                                    class="error-action-btn rounded-lg px-4 sm:px-6 py-1.5 sm:py-2 font-semibold text-xs sm:text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700"
                                     onclick="closeModal()">
                                     <i class="fas fa-redo mr-1 sm:mr-2"></i>Coba
                                     Lagi
@@ -489,18 +406,122 @@
                 </div>
             </div>
 
+            <div
+                class="fixed inset-0 z-50 hidden items-center justify-center p-4"
+                id="purchaseModal" role="dialog" aria-modal="true"
+                aria-labelledby="purchaseModalTitle">
+                <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                    id="purchaseModalBackdrop"></div>
+                <div
+                    class="relative max-h-[calc(100dvh-2rem)] w-full max-w-sm overflow-y-auto rounded-2xl bg-white shadow-2xl">
+                    <div class="flex items-center justify-between bg-gray-900 px-4 py-3 text-white sm:px-5">
+                        <h2 class="text-base font-bold" id="purchaseModalTitle">Tempat membeli voucher</h2>
+                        <button type="button"
+                            class="inline-flex h-11 w-11 items-center justify-center border-0 bg-transparent p-0 text-xl text-white shadow-none outline-none ring-0 transition-transform hover:scale-110 focus:outline-none focus:ring-0 focus-visible:scale-110 focus-visible:text-blue-200"
+                            id="purchaseModalClose"
+                            style="border: 0; outline: 0; box-shadow: none;"
+                            aria-label="Tutup informasi voucher"
+                            onclick="closePurchaseModal()">
+                            <i class="fas fa-xmark" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <div class="space-y-5 p-4 sm:p-5">
+                        <section aria-labelledby="physicalVoucherTitle">
+                            <div class="mb-3 flex items-center gap-2">
+                                <div
+                                    class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-cyan-400">
+                                    <i class="fas fa-store text-xs text-white" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-gray-800" id="physicalVoucherTitle">Voucher Fisik</h3>
+                            </div>
+
+                            <div class="store-item rounded-lg px-3 py-2.5">
+                                <span class="text-xs font-medium leading-6 text-gray-700">
+                                    <i class="fas fa-store text-xs text-yellow-500" aria-hidden="true"></i>
+                                    Warung Bi Saniti<br>
+                                    <i class="fas fa-store text-xs text-yellow-500" aria-hidden="true"></i>
+                                    Warung Bi Uni<br>
+                                    <i class="fas fa-store text-xs text-yellow-500" aria-hidden="true"></i>
+                                    Warung Mba Ela<br>
+                                    <i class="fas fa-store text-xs text-yellow-500" aria-hidden="true"></i>
+                                    Warung Mba Tuti
+                                </span>
+                            </div>
+                        </section>
+
+                        <section class="border-t border-gray-200 pt-5" aria-labelledby="onlineVoucherTitle">
+                            <div class="mb-3 flex items-center gap-2">
+                                <div
+                                    class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-cyan-400">
+                                    <i class="fas fa-globe text-xs text-white" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-gray-800" id="onlineVoucherTitle">Voucher Online</h3>
+                            </div>
+
+                            <div class="relative">
+                                <div class="url-box" id="urlText">
+                                    https://voucher.emmeril-hotspot.online
+                                </div>
+                                <button class="copy-btn-github"
+                                    id="copyUrlBtn" title="Salin alamat pembelian voucher"
+                                    aria-label="Salin alamat pembelian voucher" type="button">
+                                    <i class="fas fa-copy text-xs" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
             <!-- Fallback input untuk copy -->
             <input type="text" id="copyFallback" class="copy-fallback"
                 value="https://voucher.emmeril-hotspot.online">
 
             <script>
-        // Modal Functions
+        let modalReturnFocus = null;
+
         function showModal() {
-            document.getElementById('errorModal').classList.remove('hidden');
+            const errorModal = document.getElementById('errorModal');
+            modalReturnFocus = document.activeElement;
+            errorModal.classList.remove('hidden');
+            document.getElementById('errorModalClose').focus();
         }
         
         function closeModal() {
-            document.getElementById('errorModal').classList.add('hidden');
+            const errorModal = document.getElementById('errorModal');
+            if (errorModal.classList.contains('hidden')) {
+                return;
+            }
+
+            errorModal.classList.add('hidden');
+            const usernameInput = document.getElementById('username-user');
+            if (usernameInput) {
+                usernameInput.focus();
+                usernameInput.select();
+            } else if (modalReturnFocus) {
+                modalReturnFocus.focus();
+            }
+        }
+
+        function showPurchaseModal() {
+            const purchaseModal = document.getElementById('purchaseModal');
+            purchaseModal.classList.remove('hidden');
+            purchaseModal.classList.add('flex');
+            document.body.classList.add('overflow-hidden');
+            document.getElementById('purchaseModalClose').focus();
+        }
+
+        function closePurchaseModal() {
+            const purchaseModal = document.getElementById('purchaseModal');
+            if (purchaseModal.classList.contains('hidden')) {
+                return;
+            }
+
+            purchaseModal.classList.add('hidden');
+            purchaseModal.classList.remove('flex');
+            document.body.classList.remove('overflow-hidden');
+            document.getElementById('openPurchaseModal').focus();
         }
         
         // Show notification
@@ -657,50 +678,10 @@
                 usernameInput.focus();
             }
 
-            // MikroTik Error Handling dengan Modal
-            var error = "$(error)";
-            if (error && error !== "") {
-                var title = "Gagal Masuk";
-                var subtitle = "";
-                var msg = error;
-                
-                // Terjemahkan pesan error
-                if(error.includes("username") || error.includes("password") || error.includes("invalid")) {
-                    subtitle = "Kredensial Salah";
-                    msg = "Username atau Password yang Anda masukkan tidak valid. Silakan periksa kembali.";
-                } else if(error.includes("full") || error.includes("limit")) {
-                    subtitle = "Batas Pengguna Penuh";
-                    msg = "Batas pengguna voucher sudah penuh. Silakan coba lagi nanti atau hubungi Customer Service.";
-                } else if(error.includes("expired")) {
-                    subtitle = "Voucher Kadaluarsa";
-                    msg = "Voucher Anda telah kadaluarsa. Silakan beli voucher baru untuk melanjutkan.";
-                } else if(error.includes("mac")) {
-                    subtitle = "Perangkat Terdaftar";
-                    msg = "Perangkat Anda sudah terdaftar dengan akun lain. Silakan gunakan perangkat lain atau hubungi CS.";
-                } else if(error.includes("already")) {
-                    subtitle = "Sudah Terhubung";
-                    msg = "Anda sudah terhubung ke jaringan. Tidak perlu login kembali.";
-                } else {
-                    subtitle = "Kesalahan Sistem";
-                    msg = "Terjadi kesalahan pada sistem. Silakan coba beberapa saat lagi.";
-                }
-                
-                // Update modal content
-                document.getElementById('errorModalSubtitle').innerText = subtitle;
-                document.getElementById('errorModalMessage').innerText = msg;
-                
-                // Tampilkan modal
+            var error = document.getElementById('errorModalMessage').textContent.trim();
+            var unresolvedError = "$" + "(error)";
+            if (error !== "" && error !== unresolvedError) {
                 showModal();
-                
-                // Auto focus ke username input setelah modal ditutup
-                document.getElementById('errorModal').addEventListener('click', function (e) {
-                    if (e.target === this) {
-                        if (usernameInput) {
-                            usernameInput.focus();
-                            usernameInput.select();
-                        }
-                    }
-                });
             }
             
             // Attach copy button event
@@ -734,20 +715,49 @@
             }
         });
         
-        // Close modal when clicking outside
         document.getElementById('errorModal').addEventListener('click', function(e) {
-            if (e.target === this) {
+            if (e.target.id === 'errorModalBackdrop') {
                 closeModal();
             }
         });
+
+        document.getElementById('purchaseModal').addEventListener('click', function(e) {
+            if (e.target.id === 'purchaseModalBackdrop') {
+                closePurchaseModal();
+            }
+        });
         
-        // Close modal with Escape key
+        // Keep keyboard focus inside the open dialog.
         document.addEventListener('keydown', function(e) {
+            const errorModal = document.getElementById('errorModal');
+            const purchaseModal = document.getElementById('purchaseModal');
+            const activeModal = !purchaseModal.classList.contains('hidden')
+                ? purchaseModal
+                : (!errorModal.classList.contains('hidden') ? errorModal : null);
+
+            if (!activeModal) {
+                return;
+            }
+
             if (e.key === 'Escape') {
-                closeModal();
-                const errorModal = document.getElementById('errorModal');
-                if (!errorModal.classList.contains('hidden')) {
+                if (activeModal === purchaseModal) {
+                    closePurchaseModal();
+                } else {
                     closeModal();
+                }
+                return;
+            }
+
+            if (e.key === 'Tab') {
+                const focusable = activeModal.querySelectorAll('button:not([disabled]), a[href]');
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
                 }
             }
         });

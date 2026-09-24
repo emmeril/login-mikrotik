@@ -1,104 +1,88 @@
-# This file contains error messages which are shown to user, when http/https
-# login is used.
-# These messages can be changed to make user interface more friendly, including
-# translations to different languages.
+# Berkas ini berisi pesan kesalahan yang ditampilkan kepada pengguna saat
+# proses masuk melalui HTTP/HTTPS.
+# Pesan dapat diubah agar lebih mudah dipahami oleh pengguna.
 #
-# Various variables can be used here as well. Most frequently used ones are:
-#	$(error-orig)	- original error message from hotspot
-#	$(ip)		- ip address of a client
-#	$(username)	- username of client trying to log in
+# Variabel yang paling sering digunakan:
+#	$(error-orig)	- pesan kesalahan asli dari hotspot
+#	$(ip)		- alamat IP pengguna
+#	$(username)	- nama pengguna yang mencoba masuk
 
 # internal-error
-# It should never happen. If it will, error page will be shown
-# displaying this error message (error-orig will describe what has happened)
+# Kesalahan internal yang seharusnya tidak terjadi. Variabel error-orig
+# menjelaskan penyebab kesalahan dari hotspot.
 
-internal-error = internal error ($(error-orig))
+internal-error = Terjadi kesalahan internal ($(error-orig)).
 
 # config-error
-# Should never happen if hotspot is configured properly.
+# Kesalahan ini tidak akan muncul jika hotspot dikonfigurasi dengan benar.
 
-config-error = configuration error ($(error-orig))
+config-error = Terjadi kesalahan konfigurasi ($(error-orig)).
 
 # not-logged-in
-# Will happen, if status or logout page is requested by user,
-# which actually is not logged in
+# Muncul saat pengguna yang belum masuk membuka halaman status atau keluar.
 
-not-logged-in = you are not logged in (ip $(ip))
+not-logged-in = Anda belum masuk ke hotspot (IP $(ip)).
 
 # ippool-empty
-# IP address for user is to be assigned from ip pool, but there are no more
-# addresses in that pool
+# Muncul saat tidak ada alamat IP yang tersedia di dalam IP pool.
 
-ippool-empty = cannot assign ip address - no more free addresses from pool
+ippool-empty = Alamat IP tidak dapat diberikan karena tidak ada alamat yang tersedia.
 
 # shutting-down
-# When shutdown is executed, new clients are not accepted
+# Muncul saat layanan hotspot sedang dimatikan dan tidak menerima pengguna baru.
 
-shutting-down = hotspot service is shutting down
+shutting-down = Layanan hotspot sedang dimatikan. Silakan coba lagi nanti.
 
 # user-session-limit
-# If user profile has limit of shared-users, then this error will be shown
-# after reaching this limit
+# Muncul saat jumlah perangkat aktif telah mencapai batas shared-users.
 
-user-session-limit = user yang digunakan sudah penuh! $(username)
+user-session-limit = Batas perangkat untuk pengguna $(username) telah tercapai.
 
 # license-session-limit
-# Depending on licence number of active hotspot clients is limited to
-# one or another amount. If this limit is reached, following error is displayed.
+# Muncul saat jumlah pengguna aktif telah mencapai batas lisensi MikroTik.
 
-license-session-limit = session limit reached ($(error-orig))
+license-session-limit = Batas sesi lisensi telah tercapai ($(error-orig)).
 
 # wrong-mac-username
-# If username looks like MAC address (12:34:56:78:9a:bc), but is not
-# a MAC address of this client, login is rejected
+# Muncul saat nama pengguna berbentuk alamat MAC, tetapi tidak cocok dengan
+# alamat MAC perangkat yang sedang digunakan.
 
-wrong-mac-username = invalid username ($(username)): this MAC address is not yours
+wrong-mac-username = Nama pengguna $(username) tidak valid karena alamat MAC perangkat tidak sesuai.
 
 # chap-missing
-# If http-chap login method is used, but hotspot program does not receive
-# back encrypted password, this error message is shown.
-# Possible reasons of failure:
-#	- JavaScript is not enabled in web browser;
-#	- login.html page is not valid;
-#	- challenge value has expired on server (more than 1h of inactivity);
-#	- http-chap login method is recently removed;
-# If JavaScript is enabled and login.html page is valid,
-# then retrying to login usually fixes this problem.
+# Muncul saat metode HTTP-CHAP digunakan, tetapi hotspot tidak menerima
+# kata sandi terenkripsi. Pastikan JavaScript aktif, lalu coba masuk kembali.
 
-chap-missing = web browser did not send challenge response (try again, enable JavaScript)
+chap-missing = Browser tidak mengirim respons autentikasi. Aktifkan JavaScript, lalu coba lagi.
 
 # invalid-username
-# Most general case of invalid username or password. If RADIUS server
-# has sent an error string with Access-Reject message, then it will
-# override this setting.
+# Muncul saat nama pengguna atau kata sandi tidak valid. Pesan Access-Reject
+# dari server RADIUS dapat menggantikan pesan ini.
 
-invalid-username = username atau password yang anda masukan salah!
+invalid-username = Nama pengguna atau kata sandi salah. Silakan periksa kembali.
 
 # invalid-mac
-# Local users (on hotspot server) can be bound to some MAC address. If login
-# from different MAC is tried, this error message will be shown.
+# Muncul saat akun lokal terikat ke alamat MAC lain.
 
-invalid-mac = user $(username) MAC address berbeda dengan yang terdaftar !
+invalid-mac = Pengguna $(username) hanya dapat digunakan pada perangkat yang terdaftar.
 
 # uptime-limit, traffic-limit
-# For local hotspot users in case if limits are reached
+# Muncul saat pengguna lokal mencapai batas waktu atau kuota data.
 
-uptime-limit = user $(username) has reached uptime limit
-traffic-limit = user $(username) has reached traffic limit
+uptime-limit = Batas waktu penggunaan untuk pengguna $(username) telah habis.
+traffic-limit = Batas kuota data untuk pengguna $(username) telah habis.
 
 # radius-timeout
-# User is authenticated by RADIUS server, but no response is received from it,
-# following error will be shown.
+# Muncul saat server RADIUS tidak memberikan respons.
 
-radius-timeout = RADIUS server is not responding
+radius-timeout = Server RADIUS tidak merespons. Silakan coba lagi.
 
 # auth-in-progress
-# Authorization in progress. Client already has issued an authorization request
-# which is not yet complete.
+# Muncul saat permintaan autentikasi sebelumnya masih diproses.
 
-auth-in-progress = already authorizing, retry later
+auth-in-progress = Proses masuk sedang berlangsung. Silakan coba lagi sebentar.
 
 # radius-reply
-# Radius server returned some custom error message
+# Pesan khusus yang dikirim oleh server RADIUS.
 
-radius-reply = $(error-orig)
+radius-reply = Pesan dari server autentikasi: $(error-orig)
