@@ -12,9 +12,8 @@ $(endif)
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
 <link rel="stylesheet" href="assets/css/styles.min.css">
-<script>
-
 $(if advert-pending == 'yes')
+<script>
     var popup = '';
     function focusAdvert() {
 	if (window.focus) popup.focus();
@@ -23,10 +22,12 @@ $(if advert-pending == 'yes')
 	popup = open('$(link-advert)', 'hotspot_advert', '');
 	setTimeout("focusAdvert()", 1000);
     }
+</script>
 $(endif)
+<script>
     function openLogout() {
 	if (window.name != 'hotspot_status') return true;
-        open('$(link-logout)', 'hotspot_logout', 'toolbar=0,location=0,directories=0,status=0,menubars=0,resizable=1,width=280,height=250');
+        open('$(link-logout)?erase-cookie=on', 'hotspot_logout', 'toolbar=0,location=0,directories=0,status=0,menubars=0,resizable=1,width=280,height=250');
 	window.close();
 	return false;
     }
@@ -44,6 +45,7 @@ $(endif)
                 $(endif)                
 
                 <form action="$(link-logout)" name="logout" onSubmit="return openLogout()">
+                    <input type="hidden" name="erase-cookie" value="on">
                     <table>
                         <tr><td>IP address</td><td>$(ip)</td></tr>
                         <tr><td>Bytes up / down</td><td>$(bytes-in-nice) / $(bytes-out-nice)</td></tr>

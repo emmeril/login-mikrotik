@@ -13,6 +13,19 @@
 <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
 <link rel="stylesheet" href="assets/css/styles.min.css">
 <script>
+    function clearBrowserCookies() {
+        const cookies = document.cookie ? document.cookie.split(';') : [];
+
+        cookies.forEach(function(cookie) {
+            const cookieName = cookie.split('=')[0].trim();
+            if (!cookieName) return;
+
+            document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+            document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=' + window.location.hostname;
+        });
+    }
+
+    clearBrowserCookies();
     window.location.replace('$(link-login)');
 
     function openLogin() {
